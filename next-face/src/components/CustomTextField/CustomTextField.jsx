@@ -35,6 +35,12 @@ export default function CustomTextField({
         multiline={multiline}
         minRows={multiline ? minRows : undefined}
         type={isPassword && !showPassword ? 'password' : 'text'}
+        inputProps={{
+          ...(isPassword && {
+            autoComplete: 'current-password',
+            'data-testid': 'password-input',
+          }),
+        }}
         sx={{
           borderRadius: '0.444rem',
           fontWeight: 400,
@@ -76,6 +82,21 @@ export default function CustomTextField({
             }, // Safari/Chrome
             '& input[type="password"]::-webkit-textfield-decoration-container':
               { display: 'none' }, // older Safari
+            
+            /* Mobile-specific password field fixes */
+            '& input[type="password"]': {
+              WebkitTextSecurity: 'disc', // Ensure password dots show on mobile
+              fontFamily: 'text-security-disc, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            },
+            
+            /* Ensure password visibility on mobile */
+            '@media (max-width: 768px)': {
+              '& input[type="password"]': {
+                fontSize: '16px', // Prevent zoom on iOS
+                WebkitTextSecurity: 'disc',
+                fontFamily: 'text-security-disc, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+              },
+            },
           },
 
           endAdornment: isPassword && (
