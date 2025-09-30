@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import loginSchema from './loginSchema';
+import loginSchema from './loginschema';
 import CustomTextField from '../../CustomTextField/CustomTextField';
 import Button from '../../Button/Button';
 import { useAuth } from '../../../context/AuthContext';
