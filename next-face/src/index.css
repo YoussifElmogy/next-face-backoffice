@@ -67,24 +67,31 @@ button:focus-visible {
   }
 }
 
-/* Mobile password field fixes */
-@font-face {
-  font-family: 'text-security-disc';
-  src: url('data:font/woff2;base64,') format('woff2');
-  font-display: swap;
-}
-
-/* Ensure password dots show on mobile */
+/* Safari-specific password field fixes */
 input[type="password"] {
   -webkit-text-security: disc !important;
-  font-family: 'text-security-disc', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: 0.1em !important;
+  font-size: 16px !important; /* Prevent zoom on iOS Safari */
 }
 
-/* Mobile-specific fixes */
+/* Safari mobile specific */
 @media (max-width: 768px) {
   input[type="password"] {
-    font-size: 16px !important; /* Prevent zoom on iOS */
+    font-size: 16px !important;
     -webkit-text-security: disc !important;
-    font-family: 'text-security-disc', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    letter-spacing: 0.1em !important;
+    min-height: 44px !important;
+  }
+}
+
+/* Safari desktop */
+@media not (max-width: 768px) {
+  input[type="password"] {
+    font-size: 1rem !important;
+    -webkit-text-security: disc !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    letter-spacing: 0.05em !important;
   }
 }

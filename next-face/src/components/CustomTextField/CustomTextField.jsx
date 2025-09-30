@@ -39,6 +39,9 @@ export default function CustomTextField({
           ...(isPassword && {
             autoComplete: 'current-password',
             'data-testid': 'password-input',
+            spellCheck: false,
+            autoCorrect: 'off',
+            autoCapitalize: 'off',
           }),
         }}
         sx={{
@@ -83,18 +86,32 @@ export default function CustomTextField({
             '& input[type="password"]::-webkit-textfield-decoration-container':
               { display: 'none' }, // older Safari
             
-            /* Mobile-specific password field fixes */
+            /* Safari-specific password field fixes */
             '& input[type="password"]': {
-              WebkitTextSecurity: 'disc', // Ensure password dots show on mobile
-              fontFamily: 'text-security-disc, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+              fontSize: '16px', // Prevent zoom on iOS Safari
+              WebkitTextSecurity: 'disc',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+              letterSpacing: '0.1em', // Add spacing between dots
             },
             
-            /* Ensure password visibility on mobile */
+            /* Safari mobile fixes */
             '@media (max-width: 768px)': {
               '& input[type="password"]': {
-                fontSize: '16px', // Prevent zoom on iOS
+                fontSize: '16px !important', // Prevent zoom on iOS
                 WebkitTextSecurity: 'disc',
-                fontFamily: 'text-security-disc, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                letterSpacing: '0.1em',
+                minHeight: '44px', // Ensure touch target size
+              },
+            },
+            
+            /* Safari desktop fixes */
+            '@media not (max-width: 768px)': {
+              '& input[type="password"]': {
+                fontSize: '1rem',
+                WebkitTextSecurity: 'disc',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                letterSpacing: '0.05em',
               },
             },
           },
