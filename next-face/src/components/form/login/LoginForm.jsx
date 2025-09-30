@@ -8,7 +8,7 @@ import { useAuth } from '../../../context/AuthContext';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import CustomLoader from '../../skeletons/customLoader';
+import CustomLoader from '../../skeletons/CustomLoader';
 
 const LoginForm = () => {
   const { login } = useAuth();
