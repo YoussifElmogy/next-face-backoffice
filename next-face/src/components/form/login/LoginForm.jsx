@@ -62,6 +62,7 @@ const LoginForm = () => {
         <CustomTextField
           label="Password"
           placeholder="Password"
+          type="password"
           fullWidth
           error={!!errors.password}
           helperText={errors.password?.message}
