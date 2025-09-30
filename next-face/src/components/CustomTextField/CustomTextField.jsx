@@ -35,12 +35,9 @@ export default function CustomTextField({
         multiline={multiline}
         minRows={multiline ? minRows : undefined}
         type={isPassword && !showPassword ? 'password' : 'text'}
-        inputProps={{
-          ...(isPassword && {
-            autoComplete: 'current-password',
-            'data-testid': 'password-input',
-          }),
-        }}
+        name={isPassword ? 'password' : 'text'}
+        autoComplete={isPassword ? 'current-password' : 'off'}
+  
         sx={{
           borderRadius: '0.444rem',
           fontWeight: 400,
