@@ -85,6 +85,7 @@ export default function CustomTextField({
             
             /* Mobile-specific password field fixes */
             '& input[type="password"]': {
+               WebkitTextFillColor: '#111',
               WebkitTextSecurity: 'disc', // Ensure password dots show on mobile
               fontFamily: 'text-security-disc, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             },
