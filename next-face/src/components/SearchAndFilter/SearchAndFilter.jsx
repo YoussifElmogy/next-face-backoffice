@@ -84,7 +84,7 @@ export default function SearchAndFilter({
           inputProps={{ maxLength: maxLength }}
         />
       </Stack>
-      <Stack direction="row" alignItems="center" gap="0.889rem">
+      <Stack direction="row" alignItems="center" gap="0.889rem" flexWrap="wrap">
         <ResetButton onClick={onReset} sx={{ minWidth: '7.944rem' }}>
           {' '}
           Reset

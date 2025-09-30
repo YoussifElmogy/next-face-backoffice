@@ -35,8 +35,8 @@ export default function CustomTextField({
         multiline={multiline}
         minRows={multiline ? minRows : undefined}
         type={isPassword && !showPassword ? 'password' : 'text'}
-        name={isPassword ? 'password' : 'text'}
-        autoComplete={isPassword ? 'current-password' : 'off'}
+        name={isPassword && !showPassword ? 'password' : 'text'}
+        autoComplete={isPassword && !showPassword ? 'current-password' : 'off'}
   
         sx={{
           borderRadius: '0.444rem',
@@ -70,30 +70,6 @@ export default function CustomTextField({
               color: '#8F8F8F',
               fontSize: '1rem',
               opacity: 1,
-            },
-
-            /* Hide native browser reveal/clear icons (Edge/Safari) */
-            '& input::-ms-reveal, & input::-ms-clear': { display: 'none' }, // Edge/IE
-            '& input[type="password"]::-webkit-credentials-auto-fill-button': {
-              display: 'none',
-            }, // Safari/Chrome
-            '& input[type="password"]::-webkit-textfield-decoration-container':
-              { display: 'none' }, // older Safari
-            
-            /* Mobile-specific password field fixes */
-            '& input[type="password"]': {
-               WebkitTextFillColor: '#111',
-              WebkitTextSecurity: 'disc', // Ensure password dots show on mobile
-              fontFamily: 'text-security-disc, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            },
-            
-            /* Ensure password visibility on mobile */
-            '@media (max-width: 768px)': {
-              '& input[type="password"]': {
-                fontSize: '16px', // Prevent zoom on iOS
-                WebkitTextSecurity: 'disc',
-                fontFamily: 'text-security-disc, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              },
             },
           },
 
