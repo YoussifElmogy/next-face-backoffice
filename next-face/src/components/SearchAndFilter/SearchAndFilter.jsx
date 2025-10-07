@@ -20,6 +20,7 @@ export default function SearchAndFilter({
   showExport = true,
   exportFilename = 'users_export',
   fetchAllUsers = null,
+  dataType = 'users', // 'users' or 'subscriptions'
 }) {
   
   const handleExport = async () => {
@@ -27,36 +28,45 @@ export default function SearchAndFilter({
     
     if (fetchAllUsers) {
       // Fetch all users from API for export
-      console.log('Fetching all users for export...');
-      const allUsers = await fetchAllUsers();
-      console.log('All users fetched:', allUsers);
+      console.log('Fetching all data for export...');
+      const allData = await fetchAllUsers();
+      console.log('All data fetched:', allData);
+      console.log('Data type:', dataType);
       
-      if (!allUsers || allUsers.length === 0) {
-        alert('No users data to export.');
+      if (!allData || allData.length === 0) {
+        alert('No data to export.');
         return;
       }
       
       // Map the API data for export
-      const mappedData = allUsers.map(user => ({
-        name: user.name,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        organizationName: user.organizationName,
-        speciality: user.speciality,
-        nationality: user.nationality,
-      }));
+      let mappedData;
+      if (dataType === 'subscriptions') {
+        mappedData = allData.map(subscription => ({
+          email: subscription.email || subscription,
+        }));
+      } else {
+        mappedData = allData.map(user => ({
+          name: user.name,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          organizationName: user.organizationName,
+          speciality: user.speciality,
+          nationality: user.nationality,
+        }));
+      }
       
-      exportToCSV(mappedData, exportFilename);
+      console.log('Mapped data for export:', mappedData);
+      exportToCSV(mappedData, exportFilename, dataType);
     } else if (exportData) {
       // Fallback to provided exportData
       console.log('Export data:', exportData);
       
       if (exportData.length === 0) {
-        alert('No users data to export.');
+        alert('No data to export.');
         return;
       }
       
-      exportToCSV(exportData, exportFilename);
+      exportToCSV(exportData, exportFilename, dataType);
     } else {
       alert('No export function or data provided.');
     }

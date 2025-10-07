@@ -14,6 +14,7 @@ import globbyLogo from '../../assets/next-face-bo.png';
 
 const navItems = [
   { label: 'Users', icon: usersIcon, to: '/' },
+  { label: 'Subscribed Users', icon: usersIcon, to: '/subscribed-users' },
 ];
 
 export default function Sidebar({ sidebarWidth = '17.778rem' }) {

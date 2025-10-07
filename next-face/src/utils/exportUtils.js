@@ -2,21 +2,29 @@
 import { saveAs } from 'file-saver';
 
 // Function to export data as CSV
-export const exportToCSV = (data, filename = 'users_export') => {
+export const exportToCSV = (data, filename = 'users_export', dataType = 'users') => {
   if (!data || data.length === 0) {
     alert('No data to export');
     return;
   }
 
-  // Transform data to include only the fields we want to export
-  const exportData = data.map(user => ({
-    'Full Name': user.name || 'N/A',
-    'Email': user.email || 'N/A',
-    'Phone Number': user.phoneNumber || 'N/A',
-    'Organization': user.organizationName || 'N/A',
-    'Speciality': user.speciality || 'N/A',
-    'Nationality': user.nationality || 'N/A'
-  }));
+  // Transform data based on type
+  let exportData;
+  if (dataType === 'subscriptions') {
+    exportData = data.map(subscription => ({
+      'Email Address': subscription.email || 'N/A'
+    }));
+  } else {
+    // Default to users format
+    exportData = data.map(user => ({
+      'Full Name': user.name || 'N/A',
+      'Email': user.email || 'N/A',
+      'Phone Number': user.phoneNumber || 'N/A',
+      'Organization': user.organizationName || 'N/A',
+      'Speciality': user.speciality || 'N/A',
+      'Nationality': user.nationality || 'N/A'
+    }));
+  }
 
   // Convert data to CSV format
   const csvContent = [
