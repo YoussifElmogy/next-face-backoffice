@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CustomLoader from '../components/skeletons/CustomLoader';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import SearchAndFilter from '../components/SearchAndFilter/SearchAndFilter';
 import CustomPaginatedTable from '../components/CustomPaginatedTable/CustomPaginatedTable';
 import CustomPagination from '../components/Pagination/Pagination';
@@ -33,7 +33,7 @@ export default function SubscribedUsers() {
       {loading ? (
         <CustomSkeleton width="14.111rem" height="2.5rem" borderRadius="2rem" sx={{ m: 0, mb: '1.556rem' }} />
       ) : (
-        <h2>Subscribed Users {totalCount}</h2>
+        <Typography sx={{mb:'1.556rem', color:'#111928', fontSize:'1.6rem', fontWeight:700}} >Subscribed Users {totalCount}</Typography>
       )}
 
       <Box
