@@ -52,6 +52,8 @@ export default function SearchAndFilter({
           organizationName: user.organizationName,
           speciality: user.speciality,
           nationality: user.nationality,
+          airportName: user.airportName,
+          flightDetails: user.flightDetails,
         }));
       }
       

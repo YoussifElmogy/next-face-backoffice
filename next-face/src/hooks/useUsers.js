@@ -162,6 +162,52 @@ export default function useUsers() {
     }
   };
 
+  // Delete user modal state
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [userIdToDelete, setUserIdToDelete] = useState(null);
+
+  // Open delete confirmation modal
+  const openDeleteModal = (userId) => {
+    setUserIdToDelete(userId);
+    setDeleteModalOpen(true);
+  };
+
+  // Close delete modal
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
+    setUserIdToDelete(null);
+  };
+
+  // Delete user function
+  const handleDeleteUser = async () => {
+    if (!userIdToDelete) return;
+
+    setLoadingDeleteUser(true);
+    try {
+      await del(`/api/admin/users/${userIdToDelete}`);
+
+      setToastQueue(queue => [
+        ...queue,
+        { message: 'User deleted successfully.', severity: 'success' },
+      ]);
+
+      // Refresh the current page data
+      setRefreshFlag(prev => prev + 1);
+      closeDeleteModal();
+    } catch (err) {
+      console.error('Error deleting user:', err);
+      setToastQueue(queue => [
+        ...queue,
+        {
+          message: err.message || 'Failed to delete user. Please try again.',
+          severity: 'error',
+        },
+      ]);
+    } finally {
+      setLoadingDeleteUser(false);
+    }
+  };
+
   // Fetch ALL users for export (without pagination)
   const fetchAllUsers = useCallback(async () => {
     try {
@@ -200,12 +246,15 @@ export default function useUsers() {
 
   // Map API fields to table columns
   const mappedUsers = users.map(user => ({
+    id: user.id,
     name: user.name,
     email: user.email,
     phoneNumber: user.phoneNumber,
     speciality: user.speciality,
     organizationName: user.organizationName,
     nationality: user.nationality,
+    airportName: user.airportName,
+    flightDetails: user.flightDetails,
 
   }));
 
@@ -235,5 +284,9 @@ export default function useUsers() {
     setRefreshFlag,
     loadingResendActivation,
     fetchAllUsers,
+    handleDeleteUser,
+    deleteModalOpen,
+    openDeleteModal,
+    closeDeleteModal,
   };
 }

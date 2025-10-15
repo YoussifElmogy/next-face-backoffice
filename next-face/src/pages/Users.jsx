@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import CustomLoader from '../components/skeletons/CustomLoader';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import SearchAndFilter from '../components/SearchAndFilter/SearchAndFilter';
 import CustomPaginatedTable from '../components/CustomPaginatedTable/CustomPaginatedTable';
 import CustomPagination from '../components/Pagination/Pagination';
 import CustomSkeleton from '../components/skeletons/CustomSkeleton';
+import ConfirmationModal from '../components/ConfirmationModal/ConfirmationModal';
 import useUsers from '../hooks/useUsers';
 
 export default function Users() {
@@ -24,6 +26,10 @@ export default function Users() {
     handleReset,
     handleApply,
     fetchAllUsers,
+    handleDeleteUser,
+    deleteModalOpen,
+    openDeleteModal,
+    closeDeleteModal,
 
   } = useUsers();
 
@@ -35,6 +41,24 @@ export default function Users() {
     { key: 'phoneNumber', label: 'Phone' },
     { key: 'speciality', label: 'Speciality' },
     { key: 'organizationName', label: 'Organization' },
+    { 
+      key: 'actions', 
+      label: 'Actions',
+      render: (row) => (
+        <IconButton
+          onClick={() => openDeleteModal(row.id)}
+          disabled={loadingDeleteUser}
+          sx={{
+            color: '#EF4444',
+            '&:hover': {
+              bgcolor: '#FEE2E2',
+            },
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      )
+    },
 
   ];
 
@@ -94,6 +118,17 @@ export default function Users() {
         )}
       </Box>
 
+      {/* Delete Confirmation Modal */}
+      <ConfirmationModal
+        open={deleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={handleDeleteUser}
+        title="Delete User"
+        message="Are you sure you want to delete this user? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        isLoading={loadingDeleteUser}
+      />
 
     </>
   );

@@ -1,6 +1,20 @@
 // src/utils/exportUtils.js
 import { saveAs } from 'file-saver';
 
+// Format airport names
+const formatAirportName = (airportName) => {
+  if (!airportName) return 'N/A';
+  
+  // Map airport codes to formatted names
+  const airportMap = {
+    'CAIRO_AIRPORT': 'Cairo Airport',
+    'HURGHADA_AIRPORT': 'Hurghada Airport',
+  };
+  
+  // Return formatted name if exists, otherwise return original
+  return airportMap[airportName] || airportName;
+};
+
 // Function to export data as CSV
 export const exportToCSV = (data, filename = 'users_export', dataType = 'users') => {
   if (!data || data.length === 0) {
@@ -22,7 +36,9 @@ export const exportToCSV = (data, filename = 'users_export', dataType = 'users')
       'Phone Number': user.phoneNumber || 'N/A',
       'Organization': user.organizationName || 'N/A',
       'Speciality': user.speciality || 'N/A',
-      'Nationality': user.nationality || 'N/A'
+      'Nationality': user.nationality || 'N/A',
+      'Airport Name': formatAirportName(user.airportName),
+      'Flight Details': user.flightDetails || 'N/A'
     }));
   }
 
